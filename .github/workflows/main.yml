@@ -46,12 +46,14 @@ jobs:
 
     - run: mkdir -p path/to/artifact
 
-    - run: echo hello > path/to/artifact/world.txt
+    - run: echo hello > path/to/artifact/hello.txt
+    - run: echo world > path/to/artifact/world.txt
 
     - uses: actions/upload-artifact@v2
       with:
         name: "my artifact"
         path: |
+          path/to/artifact/hello.txt
           path/to/artifact/world.txt
           
     - name: Load Release URL File from release job
@@ -71,6 +73,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.get_release_info.outputs.upload_url }}
-        asset_path: path/to/artifact/world.txt
-        asset_name: world
+        asset_path: "my artifact.zip"
+        asset_name: world.zip
         asset_content_type: text/plain
